@@ -249,8 +249,7 @@ class PurchaseController extends Controller
         
         return new Response($serializer->serialize($response, 'json'), $code);
     }
-    
-    
+     
     /**
      * @Route("/v1/purchase/cancel/{id}.{_format}", name="purchase-cancel", methods="GET", defaults={"_format":"json"})
      */
