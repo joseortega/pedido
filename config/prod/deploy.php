@@ -15,6 +15,8 @@ return new class extends DefaultDeployer
             ->repositoryUrl('git@github.com:joseortega/pedido.git')
             // the repository branch to deploy
             ->repositoryBranch('master')
+                
+            ->symfonyEnvironment('prod')
         ;
     }
 
