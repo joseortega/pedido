@@ -9,3 +9,5 @@ sudo setfacl -R -m u:"apache":rwX -m u:apache:rwX var/cache/prod/jms_serializer
 sudo setfacl -dR -m u:"apache":rwX -m u:apache:rwX var/cache/prod/jms_serializer
 
 sudo apachectl restart
+
+Fuente https://www.codeproject.com/Articles/1157102/Apache-Symfony-on-RHEL
