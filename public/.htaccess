@@ -66,9 +66,3 @@ DirectoryIndex index.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
-
-#configure por Jose Ortega por error en el servidor 405
-<IfModule mod_headers.c>
-    # Header set Access-Control-Allow-Origin "*"
-    Header set Access-Control-Allow-Origin "http://localhost:4200"
-</IfModule>

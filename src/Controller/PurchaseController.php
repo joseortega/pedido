@@ -192,7 +192,7 @@ class PurchaseController extends Controller
             $purchase->setRequestDate(new \DateTime('now'));
             $em->flush();
 
-            $this->sendMail($mailer, $purchase);   
+            //$this->sendMail($mailer, $purchase);   
              
         }else{
             $messageError = 'Pedido no existe o no tiene ningun item asignado';
