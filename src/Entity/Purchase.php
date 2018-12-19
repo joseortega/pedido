@@ -183,4 +183,8 @@ class Purchase
             $this->setCreatedAt($dateTimeNow);
         }
     }
+    
+    public function __toString(){
+        return 'Purchase #'.$this->getId();
+    }
 }

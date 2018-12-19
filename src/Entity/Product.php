@@ -45,13 +45,15 @@ class Product
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        
+        $this->purchasedItems = new ArrayCollection();
     }
 
     public function getId(){
         return $this->id;
     }
 
-    public function getName(): string{
+    public function getName(){
         return $this->name;
     }
 
@@ -59,7 +61,7 @@ class Product
         $this->name = $name;
     }
 
-    public function getDescription(): string{
+    public function getDescription(){
         return $this->description;
     }
 
@@ -73,5 +75,13 @@ class Product
     
     public function setCategory(Category $category){
         $this->category = $category;
+    }
+    
+    public function __toString() {
+        return $this->name;
+    }
+    
+    public function getPurchasedItems(){
+        return $this->purchasedItems;
     }
 }

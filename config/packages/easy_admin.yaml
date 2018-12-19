@@ -1,0 +1,42 @@
+easy_admin:
+    design:
+        assets:
+            favicon: '/assets/backend/favicon.ico'
+    site_name: 'Pedidos Admin'
+    entities:
+        # List the entity class name you want to manage
+        Product:
+            class: App\Entity\Product
+            form:
+                fields:
+                    - { property: 'name' }
+                    - { property: 'description' }
+                    - { property: 'category' }
+        Category:
+            class: App\Entity\Category
+            form:
+                fields:
+                    - { property: 'name' }
+                    - { property: 'parent' }
+        Office:
+            class: App\Entity\Office
+            form:
+                fields:
+                    - { property: 'name' }
+        User:
+            class: App\Entity\User
+            controller: App\Controller\UserAdminController
+            form:
+                fields:
+                    - { property: 'name' }
+                    - { property: 'email' }
+                    - { property: 'username' }
+                    - { property: 'active' }
+                    - { property: 'roles', type: 'choice', type_options: { expanded: false, multiple: true, choices: { 'ROLE_RESPONSE': 'ROLE_RESPONSE', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+            new:
+                fields:  
+                    - { property: 'password', type: 'repeated', type_options: { type: Symfony\Component\Form\Extension\Core\Type\PasswordType, invalid_message: 'Passwords do not match', first_options: { label: 'Password' }, second_options: { label: Repeat Password' }, required: true } }
+            edit:
+                fields:  
+                    
+                    - { property: 'plainPassword', type: 'repeated', type_options: { type: Symfony\Component\Form\Extension\Core\Type\PasswordType, invalid_message: 'Passwords do not match', first_options: { label: 'Password' }, second_options: { label: 'Repeat Password' }, required: false } }

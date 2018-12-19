@@ -38,7 +38,7 @@ class Office
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -50,5 +50,9 @@ class Office
     
     public function getPurchases(){
         return $this->purchases;
+    }
+    
+    public function __toString() {
+        return $this->name;
     }
 }

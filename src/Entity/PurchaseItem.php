@@ -87,4 +87,8 @@ class PurchaseItem
     public function setDispatchQuantity($dispatchQuantity){
         $this->dispatchQuantity = $dispatchQuantity;
     }
+    
+    public function __toString() {
+        return 'item # '. $this->getId();
+    }
 }

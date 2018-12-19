@@ -72,7 +72,6 @@ class User implements UserInterface
     /**
      * @ORM\Column(name="password", type="string", length=255)
      * @Serializer\Exclude()
-     * @Assert\NotBlank()
      */
     private $password;
 
@@ -286,7 +285,7 @@ class User implements UserInterface
     /**
      * @return Purchase[]
      */
-    public function getPurchases(): ArrayCollection{
+    public function getPurchases(){
         return $this->purchases;
     }
     
@@ -300,7 +299,7 @@ class User implements UserInterface
     /**
      * @return Purchase[]
      */
-    public function getPurchasesResponse(): ArrayCollection{
+    public function getPurchasesResponse(){
         return $this->purchasesResponse;
     }
     
@@ -317,6 +316,10 @@ class User implements UserInterface
     public function resetRoles()
     {
         $this->roles = [];
+    }
+    
+    public function __toString() {
+        return $this->username;
     }
 
 }

@@ -5,8 +5,9 @@ namespace App\Controller;
 use App\Entity\Purchase;
 use App\Entity\Office;
 use App\Entity\PurchaseStatus;
-use App\Form\CategoryType;
+use App\Entity\User;
 use App\Repository\PurchaseRepository;
+use App\Repository\UserRepository;
 use App\Repository\OfficeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -177,7 +178,7 @@ class PurchaseController extends Controller
     /**
      * @Route("/v1/purchase/request/{id}.{_format}", name="purchase-request", methods="GET", defaults={"_format":"json"})
      */
-    public function requestPurchase($id, PurchaseRepository $purchaseRepository, \Swift_Mailer $mailer){
+    public function requestPurchase($id, PurchaseRepository $purchaseRepository, UserRepository $userRepository, \Swift_Mailer $mailer){
         $serializer = $this->get('jms_serializer');
         $em = $this->getDoctrine()->getManager();
         
@@ -191,8 +192,13 @@ class PurchaseController extends Controller
             $purchase->setStatus(PurchaseStatus::REQUEST_STATUS);
             $purchase->setRequestDate(new \DateTime('now'));
             $em->flush();
-
-            //$this->sendMail($mailer, $purchase);   
+            
+            //send email to users response
+            $users = $userRepository->findByRole('ROLE_RESPONSE');
+            
+            foreach ($users as $user){
+                $this->sendMail($mailer, $purchase, $user);  
+            }
              
         }else{
             $messageError = 'Pedido no existe o no tiene ningun item asignado';
@@ -320,11 +326,22 @@ class PurchaseController extends Controller
 
     }
     
-    public function sendMail($mailer, Purchase $purchase){
-        $message = (new \Swift_Message('Pedido en Solicitud de: '.$purchase->getUser()->getUsername()))
-            ->setFrom('sistemas@semilladelprogreso.fin.ec')
-            ->setTo('sistemas@semilladelprogreso.fin.ec')
-            ->setBody('Revise Su App de Pedidos tiene una solicitud Pendiente de: '.$purchase->getUser()->getName().' Agencia: '. $purchase->getOffice()->getName());
+    public function sendMail($mailer, Purchase $purchase, User $userResponse){
+        
+        $message = (new \Swift_Message('Nuevo Pedido: '.$purchase->getUser()->getUsername()))
+            ->setFrom($this->container->getParameter('admin_email'))
+            ->setTo($userResponse->getEmail())
+            ->setBody(
+                $this->renderView(
+                    // templates/emails/registration.html.twig
+                    'emails/purchase-request.html.twig',
+                    array('purchase' => $purchase,
+                          'adminEmail' => $this->container->getParameter('admin_email'))
+                ),
+                'text/html'
+             );
+                
+//            ->setBody('Revise Su App de Pedidos tiene una solicitud Pendiente de: '.$purchase->getUser()->getName().' Agencia: '. $purchase->getOffice()->getName());
 
         $mailer->send($message);
     }

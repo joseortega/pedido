@@ -46,7 +46,7 @@ class Category{
         return $this->id;
     }
 
-    public function getName(): string{
+    public function getName(){
         return $this->name;
     }
 
@@ -54,7 +54,7 @@ class Category{
         $this->name = $name;
     }
     
-    public function getParent(): Category{
+    public function getParent(){
         return $this->parent;
     }
     
@@ -68,5 +68,9 @@ class Category{
     
     public function addProduct(Product $product){
         $this->products->add($product);
+    }
+    
+    public function __toString() {
+        return $this->name;
     }
 }
