@@ -36,7 +36,7 @@ class PurchaseRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('p')
             ->andWhere("p.status != 'edicion'")
-            ->orderBy('p.id', 'DESC')
+            ->orderBy('p.requestDate', 'DESC')
             ->getQuery();
 
         return $qb->execute();

@@ -333,7 +333,7 @@ class PurchaseController extends Controller
             ->setTo($userResponse->getEmail())
             ->setBody(
                 $this->renderView(
-                    // templates/emails/registration.html.twig
+                    // templates/emails/purchase-request.html.twig
                     'emails/purchase-request.html.twig',
                     array('purchase' => $purchase,
                           'adminEmail' => $this->container->getParameter('admin_email'))
